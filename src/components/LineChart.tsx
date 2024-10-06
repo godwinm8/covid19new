@@ -2,58 +2,52 @@ import React from "react";
 import Plot from "react-plotly.js";
 
 interface LineChartProps {
-  trendData: {
-    date: string;
-    totalCases: number;
-    activeCases: number;
-    recovered: number;
-    deaths: number;
-  }[];
+  trendData: any[];
 }
 
 const LineChart: React.FC<LineChartProps> = ({ trendData }) => {
-  const dates = trendData.map((item) => item.date);
-  const totalCases = trendData.map((item) => item.totalCases);
-  const activeCases = trendData.map((item) => item.activeCases);
-  const recovered = trendData.map((item) => item.recovered);
-  const deaths = trendData.map((item) => item.deaths);
   return (
     <Plot
       data={[
         {
-          x: dates,
-          y: totalCases,
-          mode: "lines",
+          x: trendData.map((data) => data.date),
+          y: trendData.map((data) => data.totalCases),
           type: "scatter",
+          mode: "lines+markers",
+          marker: { color: "blue" },
           name: "Total Cases",
         },
         {
-          x: dates,
-          y: activeCases,
+          x: trendData.map((data) => data.date),
+          y: trendData.map((data) => data.activeCases),
           type: "scatter",
-          mode: "lines",
+          mode: "lines+markers",
+          marker: { color: "red" },
           name: "Active Cases",
         },
         {
-          x: dates,
-          y: recovered,
+          x: trendData.map((data) => data.date),
+          y: trendData.map((data) => data.recovered),
           type: "scatter",
-          mode: "lines",
+          mode: "lines+markers",
+          marker: { color: "green" },
           name: "Recovered",
         },
         {
-          x: dates,
-          y: deaths,
+          x: trendData.map((data) => data.date),
+          y: trendData.map((data) => data.deaths),
           type: "scatter",
-          mode: "lines",
+          mode: "lines+markers",
+          marker: { color: "black" },
           name: "Deaths",
         },
       ]}
       layout={{
-        title: "COVID-19 Trends",
-        // xaxis: { title: "Date" },
-        // yaxis: { title: "Number of Cases" },
+        title: "COVID-19 Trend",
+        xaxis: { title: "Date" },
+        yaxis: { title: "Count" },
       }}
+      style={{ width: "100%", height: "100%" }}
     />
   );
 };
